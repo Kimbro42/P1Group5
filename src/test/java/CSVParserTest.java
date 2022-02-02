@@ -56,6 +56,67 @@ public class CSVParserTest {
 		
 	}
 
+	
+	@Test
+	public void nonExistantFile() throws IOException {
+		String path;
+		
+			
+			try {
+				String path1 = new File(".").getCanonicalPath();
+				CSVParser parser = new CSVParser(new File(path1 + "/src/test/java/testcsv/testss.csv"));
+				assertTrue(false);
+				
+			} catch (FileNotFoundException e) {
+				
+				assertTrue(true);
+				
+			}
+
+	
+		
+	}
+	@Test
+	public void realFile() throws IOException {
+		String path;
+		
+			
+			try {
+				String path1 = new File(".").getCanonicalPath();
+				CSVParser parser = new CSVParser(new File(path1 + "/src/test/java/testcsv/testOrder.csv"));
+				assertTrue(true);
+				
+			} catch (FileNotFoundException e) {
+				
+				assertTrue(false);
+				
+			}
+
+	
+		
+	}
+	@Test
+	public void testFileTranslate() throws IOException {
+		String path1 = new File(".").getCanonicalPath();
+		File file1 = new File(path1 + "/src/test/java/testcsv/RYANTEST.csv");
+		CSVParser parser = new CSVParser(file1);
+		
+		ArrayList<String> temp1 = parser.translateCSV();
+		String[] answer1 = {"house,en", "deportes,es", "gracias,es", "station,en", "tower,en", "pink,en"};
+		
+		int x = 1;
+		
+		for(int i = 0; parser.hasNext(); ++i) {
+			if(!temp1.get(i).equals(answer1[i])) {
+				x = 0;
+			}
+		
+		}
+		
+		assertTrue(x == 1);  
+		
+	}
+
 	//test that the order is maintained when parsing a CSV
 	@Test
 	public void testOrder() throws IOException {
@@ -69,10 +130,13 @@ public class CSVParserTest {
 			if(!parser.next().equals(answer[i])) {
 				bool = 0;
 			}
+		
 		}
 		
 		assertTrue(bool == 0);
 		
+		
 	}
 	
+
 }
